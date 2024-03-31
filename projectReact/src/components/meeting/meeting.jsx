@@ -8,7 +8,7 @@ import Typography from '@mui/material/Typography';
 import TextField from '@mui/material/TextField';
 import Button from "@mui/material/Button";
 import Dialog from '@mui/material/Dialog';
-import { Card, DialogActions } from "@mui/material";
+import { DialogActions, Divider } from "@mui/material";
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
@@ -48,9 +48,7 @@ const Meeting = observer(() => {
 
   return (<>
     <React.Fragment>
-      <Button variant="outlined" onClick={handleClickOpen}>
-        add appointment
-      </Button>
+      
       <Dialog
         open={open}
         onClose={handleClose}
@@ -61,8 +59,8 @@ const Meeting = observer(() => {
         <DialogTitle>add appointment</DialogTitle>
         <DialogContent dividers>
           <Typography gutterBottom>
-            <FormControl fullWidth>  {/* the type service */}
-              <InputLabel id="demo-simple-select-label">service name</InputLabel>
+            <FormControl sx={{width: 200}}>  {/* the type service */}
+              <InputLabel id="demo-simple-select-label">service name</InputLabel> 
               <Select
                 labelId="demo-simple-select-label"
                 id="demo-simple-select"
@@ -71,13 +69,13 @@ const Meeting = observer(() => {
                 // onChange={handleChange}
                 >
                 <MenuItem value={10}>{serviceStore.tempServiceDate.name}</MenuItem>
-              </Select>
-            </FormControl>
+              </Select> 
+            </FormControl> <br />
             {/* <TextField id="outlined-basic" label="type" variant="outlined" value={serviceType} onChange={(e) => setServiceType(e.target.value)} /> <br /> */}
-            <TextField id="outlined-basic" label="clientName" variant="outlined" value={clientName} onChange={(e) => setClientName(e.target.value)} /> <br />
-            <TextField id="outlined-basic" label="clientPhone:" variant="outlined" value={clientPhone} onChange={(e) => setClientPhone(e.target.value)} /> <br />
-            <TextField id="outlined-basic" label="clientEmail:" variant="outlined" value={clientEmail} onChange={(e) => setClientEmail(e.target.value)} /> <br />
-            <TextField type="datetime-local" id="outlined-basic" label="date:" variant="outlined" value={date} onChange={(e) => setDate(e.target.value)} /> <br />
+           name <br /> <TextField id="outlined-basic" variant="outlined" value={clientName} onChange={(e) => setClientName(e.target.value)} /> <br />
+           phone <br /> <TextField id="outlined-basic" variant="outlined" value={clientPhone} onChange={(e) => setClientPhone(e.target.value)} /> <br />
+           email <br /> <TextField id="outlined-basic" variant="outlined" value={clientEmail} onChange={(e) => setClientEmail(e.target.value)} /> <br />
+           date <br /> <TextField type="datetime-local" id="outlined-basic" variant="outlined" value={date} onChange={(e) => setDate(e.target.value)} /> <br />
 
           </Typography>
         </DialogContent>
@@ -85,7 +83,11 @@ const Meeting = observer(() => {
           <Button variant="contained" disableElevation onClick={save}>save</Button>
         </DialogActions>
         {/* <Button variant="contained" disableElevation onClick={save}> save  </Button> */}
-      </Dialog>
+      </Dialog> <br />
+      <Button variant="outlined" onClick={handleClickOpen}>
+        add appointment
+      </Button>
+      <Divider/>
     </React.Fragment>
   </>)
 })

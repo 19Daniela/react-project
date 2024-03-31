@@ -8,7 +8,7 @@ class MeetingStore
         {
             id: 1,
             serviceType: "11",
-            dateTime: "2024-02-28T10:00:00.000Z",
+            dateTime: "2024-03-28 10:00",
             clientName: "Michal ",
             clientPhone: "050-5521451",
             clientEmail: "Michal@gmail.com",
@@ -16,7 +16,7 @@ class MeetingStore
         {
             id: 2,
             serviceType: "5",
-            dateTime: "2024-02-29T08:00:00.000Z",
+            dateTime: "2024-02-29 08:00",
             clientName: "Yuval ",
             clientPhone: "050-55474451",
             clientEmail: "Yuval@gmail.com",
@@ -34,11 +34,28 @@ class MeetingStore
         this.initData();
     }
 
-    initData(){
-        this.tempMeetingData.map(x=> this.addMeeting(x));
-    }
+    // initData(){
+    //     this.tempMeetingData.map(x=> this.addMeeting(x));
+    // }
 
-    async addMeeting(meeting){
+    async initData()
+    {
+       try
+       {
+           const res = await fetch(this.url+"/appointments");
+           const data = await res.json();
+           console.log("data"+data)
+           runInAction(()=>{
+               this.addMeeting(data);
+           });
+       }
+       catch(err)
+       {
+           console.log(err);
+       }
+   }
+
+    addMeeting=(meeting)=>{
         this.tempMeetingData = [...this.tempMeetingData, {meeting}];
     }
 

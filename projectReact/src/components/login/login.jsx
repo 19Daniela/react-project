@@ -36,7 +36,7 @@ const Login = (observer(() => {
   }
 
   return (<>
-    <h2>enter your details!</h2>
+    <h2>To log in please enter details:</h2>
     {!store.isLogin &&
       <div>
         <Box
@@ -45,12 +45,12 @@ const Login = (observer(() => {
           noValidate
           autoComplete="off"
           >
-         <TextField label="User name" variant="outlined" value={name} onChange={(e) => {setName(e.target.value)}} required/>
-         <TextField label="Password" variant="outlined" type="password" autoComplete="current-password" value={password} onChange={(e) => {setPassword(e.target.value)}} required/>
+         <TextField label="User name" variant="outlined" value={name} onChange={(e) => {setName(e.target.value)}} required/> <br />
+         <TextField label="Password" variant="outlined" type="password" autoComplete="current-password" value={password} onChange={(e) => {setPassword(e.target.value)}} required/> <br />
          <Button onClick={handleLogin}>login<LoginIcon></LoginIcon></Button>
          {console.log(name, password)}
         </Box>
-        </div>
+      </div>
     }
     {!store.flag && <Alert severity="error">user name or password is incorrect</Alert>}
     {store.degel && <AdminEnter />}

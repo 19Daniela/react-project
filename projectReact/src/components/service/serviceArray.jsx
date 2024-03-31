@@ -9,24 +9,25 @@ import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
 
 const ServiceArray = observer(() => {
 
-  return (<>
+  return(<>
     {console.log("serviceArray")}
     {serviceStore.tempServiceDate.map((service) =>
-      <div className="serviceDiv" key={service.id}>
+      <div className="serviceDiv" key={service.id} style={{float:"left", display:'inline-block'}}>
 
-        <Card sx={{ maxWidth: 250 ,float:"left"}} variant="outlined">
-          <CardHeader title={service.name} />
+        <Card sx={{ width: 250, height:250,float:"left", border:1, margin:1.5, display:"inline-block"}} variant="outlined">
+          <CardHeader title={service.name} sx={{color: 'gray'}}/>
           <CardContent>
             <Typography variant="p">
               {service.description} <br />
               duration: {service.duration} <br />
               price: {service.price} <AttachMoneyIcon />
+           { console.log(service.id)}
             </Typography>
           </CardContent>
         </Card>
         
       </div>
     )}
-  </>)
+  </> )
 })
 export default ServiceArray

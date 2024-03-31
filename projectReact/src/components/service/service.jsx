@@ -11,6 +11,7 @@ import Typography from '@mui/material/Typography';
 import CloseIcon from '@mui/icons-material/Close';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
+import { Divider, Tooltip } from '@mui/material';
 
 const Service = (observer(() => {
   useEffect(() => {
@@ -36,7 +37,7 @@ const Service = (observer(() => {
   const [name, setName] = useState();
   const [description, setDescription] = useState();
   const [price, setPrice] = useState();
-  const [duration, setDuration] = useState();
+  const [duration, setDuration] = useState( );
 
   const save = () => {
     setOpen(false);
@@ -45,10 +46,9 @@ const Service = (observer(() => {
 
   return (<>
     <React.Fragment>
-    <Button variant="outlined" onClick={handleClickOpen}>
-      <AddCircleIcon/>
-        add service
-      </Button>
+      <Tooltip title="add">
+    
+      </Tooltip>
       <Dialog
         open={open}
         onClose={handleClose}
@@ -59,14 +59,19 @@ const Service = (observer(() => {
         <DialogTitle>add service</DialogTitle>
         <DialogContent dividers>
         <Typography  gutterBottom>
-          <TextField id="nameId" label="name" variant="outlined" value={name} onChange={(e) => setName(e.target.value)} /> <br />
-          <TextField id="descId" label="description" variant="outlined" value={description} onChange={(e) => setDescription(e.target.value)} /> <br />
-          <TextField id="priceId" label="price" variant="outlined" value={price}  onChange={(e) => setPrice(e.target.value)} /> <br />
-          <TextField id="durationId" label="duration" variant="outlined" value={duration} onChange={(e) => setDuration(e.target.value)} /> <br />
+         name <br /> <TextField id="nameId" variant="outlined" value={name} onChange={(e) => setName(e.target.value)} /> <br />
+         description <br /> <TextField id="descId"  variant="outlined" value={description} onChange={(e) => setDescription(e.target.value)} /> <br />
+         price <br /> <TextField id="priceId" variant="outlined" value={price}  onChange={(e) => setPrice(e.target.value)} /> <br />
+         duration <br /> <TextField type="number" id="durationId" variant="outlined" value={duration} onChange={(e) => setDuration(e.target.value)} /> <br />
         </Typography>
         </DialogContent>
         <Button variant="contained" disableElevation onClick={save}> save  </Button>
       </Dialog>
+      <Button variant="outlined" onClick={handleClickOpen}>
+      <AddCircleIcon/>
+        add service
+      </Button>
+      <Divider/>
     </React.Fragment>
   </>)
 }))

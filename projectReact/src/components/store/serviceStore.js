@@ -39,26 +39,26 @@ class ServiceStore
         this.initData();
     }
 
-    initData(){
-        this.tempServiceDate.map(x=> this.addServiceData(x));
-    }
+    // initData(){
+    //     this.tempServiceDate.map(x=> this.addServiceData(x));
+    // }
 
-//     async initData()
-//     {
-//        try
-//        {
-//            const res = await fetch(this.url+"/services");
-//            const data = await res.json();
-//            console.log(data)
-//            runInAction(()=>{
-//                this.addServiceData(data);
-//            });
-//        }
-//        catch(err)
-//        {
-//            console.log(err);
-//        }
-//    }
+    async initData()
+    {
+       try
+       {
+           const res = await fetch(this.url+"/services");
+           const data = await res.json();
+           console.log(data)
+           runInAction(()=>{
+               this.addServiceData(data);
+           });
+       }
+       catch(err)
+       {
+           console.log(err);
+       }
+   }
 
 //    async addServiceData(service)
 //     {

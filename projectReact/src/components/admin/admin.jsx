@@ -1,8 +1,7 @@
-import { useEffect } from "react";
 import { observer } from 'mobx-react-lite';
 import store from "../store/store";
 import Login from '../login/login';
-import AdminEnter from './adminEnter';
+import AdminEnter from './AdminEnter';
 
 const Admin = observer(()=>{
   console.log("admin");

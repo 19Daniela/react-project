@@ -45,13 +45,15 @@ class Store
       }
   }
 
-  async saveDetails(name, address, phone, owner, description){
+  saveDetails= async(name, address, phone, owner, logo, description)=>
+  {
       await fetch(this.url,{
       method:"POST",
+      body: JSON.stringify({name, address, phone, owner, logo, description}),
       headers: { "Content-Type": "application/json"},
-      body: JSON.stringify({name, address, phone, owner, description})
     });
-     this.getList();
+    this.getList();
+    console.log(this.getList());
   }
 
   async saveLogin(name, password)
@@ -78,11 +80,11 @@ class Store
   //   return this.tempBusinessData;
   // }
 
-  async getList(){
+   getList = async()=>{
     const res = await fetch("http://localhost:8787/businessData");
     const data= await res.json();
     this.setDetails(data);
-    console.log(data);
+    console.log("data = "+data);
   }
 
   setDetails(value){
