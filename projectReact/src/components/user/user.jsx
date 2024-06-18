@@ -43,17 +43,10 @@ const User = observer(() => {
             <Button onClick={addMeeting}>Add appointment</Button>
          </Tooltip>
       }
-
       <Divider />
-
       {addAppoitment && <Meeting />}
       {login && <Admin />}
-
       <ServiceArray />
-
-
-
-
       {console.log("user")}
    </>)
 })

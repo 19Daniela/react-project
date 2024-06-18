@@ -1,10 +1,9 @@
 import { action, makeObservable, observable, computed, runInAction } from "mobx";
 
-class ServiceStore
-{
-    url="http://localhost:8787";
-    serviceData=[];
-    tempServiceDate=[
+class ServiceStore {
+    url = "http://localhost:8787";
+    services = [];
+    tempServiceData = [
         {
             id: 1,
             name: "Family Lawyer",
@@ -28,71 +27,56 @@ class ServiceStore
         }
     ];
 
-    constructor(){
-        makeObservable(this,{
-            serviceData: observable,
-            tempServiceDate: observable,
-            initData: action,
+    constructor() {
+        makeObservable(this, {
+            services: observable,
+            tempServiceData: observable,
             addServiceData: action,
+            sendDataToServer: action,
             getList: action
         });
-        this.initData();
+        this.sendDataToServer();
     }
 
-    // initData(){
-    //     this.tempServiceDate.map(x=> this.addServiceData(x));
-    // }
-
-    async initData()
-    {
-       try
-       {
-           const res = await fetch(this.url+"/services");
-           const data = await res.json();
-           console.log(data)
-           runInAction(()=>{
-               this.addServiceData(data);
-           });
-       }
-       catch(err)
-       {
-           console.log(err);
-       }
-   }
-
-//    async addServiceData(service)
-//     {
-//         const res= await fetch(this.url+'/service',{
-//             method: 'POST',
-//             body: JSON.stringify({service}),
-//             headers: {"Content-Type": "application/json"}
-//         });
-//         const data = await res.json();
-//         runInAction(() => {
-//             if (res.status === 200) 
-//                 this.addStatus=true;            
-//         })
-//         return data;
-//     }
-
-    async addServiceData(service){
-        this.tempServiceDate = [...this.tempServiceDate, {service}];
+    async sendDataToServer() {
+            this.services = await this.getList();
+            for (const service of this.tempServiceData) {
+                console.log("הגיע לפור");
+                const { id, name, description, price, duration } = service;
+                if (!(this.services.find((service) => service.name === name))) {
+                    await fetch(this.url + "/service", {
+                        method: "POST",
+                        headers: { "Content-Type": "application/json", },
+                        body: JSON.stringify({ id, name, description, price, duration })
+                    });
+                }
+                else{
+                    console.log("error");
+                }
+            }
+      this.tempServiceData = await this.getList();
     }
 
-    async getList() {
-        console.log("getServies");
-        const res = await fetch(this.url+"/services");
-        const data = await res.json();
-        this.tempServiceDate = ([...data]);
+    async addServiceData(id, name, description, price, duration) {
+        console.log("הוספת שירות");
+        const res = await fetch(this.url + "/service", {
+            method: "POST",
+            headers: { "Content-Type": "application/json", },
+            body: JSON.stringify({ id, name, description, price, duration })
+        });
+        if (res.status !== 200) {
+            throw new Error('Faild to add service')
+        }
+        console.log("נוסף שירות");
+        this.tempServiceData = await this.getList();
+        console.log(this.tempServiceData+" = temp");
     }
 
-    // get getList(){
-    //     return this.serviceData;
-    // }
-
-    // async getList(){
-    //     const res = await fetch(url+"/services");
-    //     return res;
-    //   }
+    getList = async () => {
+        console.log("getServies")
+        const services = await fetch("http://localhost:8787/services");
+        const data = await services.json();
+        return data;
+    }
 }
 export default new ServiceStore();

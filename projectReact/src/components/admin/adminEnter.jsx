@@ -49,13 +49,14 @@ const AdminEnter = observer(() => {
     }
 
     return (<>
+    <div>
+
         <div className="loginButton">
-            <Tooltip title="logout">
+            {/* <Tooltip title="logout"/> */}
                 <Button onClick={handleLogout}>logout <LogoutIcon></LogoutIcon></Button><br />
-            </Tooltip>
         </div>
         <Tooltip title="meeting">
-            <Button onClick={openMeeting}>meeting</Button>
+            <Button onClick={openMeeting}>meetings</Button>
         </Tooltip>
         <Tooltip title="services">
             <Button onClick={openServices}>services</Button>
@@ -73,6 +74,7 @@ const AdminEnter = observer(() => {
         {openM && <MeetingArray />}
         {serviceAdd && <Service />}
         <Divider />
+    </div>
     </>)
 })
 export default AdminEnter;

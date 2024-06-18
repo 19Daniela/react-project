@@ -1,4 +1,4 @@
-import * as React from 'react';
+// import * as React from 'react';
 import { observer } from "mobx-react-lite";
 import Paper from '@mui/material/Paper';
 import meetingStore from "../store/meetingStore";
@@ -20,7 +20,7 @@ const MeetingArray = observer(() => {
           </TableRow>
         </TableHead>
         <TableBody>
-          {meetingStore.tempMeetingData.map((meeting) => (
+          {meetingStore.tempMeetingData.slice("").sort((a, b) => new Date(a.dateTime) - new Date(b.dateTime)).map((meeting) => (
             <TableRow key={meeting.id}>
               <TableCell component="th" scope="row">
                 {meeting.id}

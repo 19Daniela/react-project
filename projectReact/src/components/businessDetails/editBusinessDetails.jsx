@@ -2,7 +2,6 @@ import React from "react";
 import { useEffect, useState } from "react";
 import { observer } from "mobx-react-lite";
 import store from "../store/store";
-import Typography from '@mui/material/Typography';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import DialogTitle from '@mui/material/DialogTitle';
@@ -16,7 +15,7 @@ import PersonIcon from '@mui/icons-material/Person';
 import Dialog from '@mui/material/Dialog';
 import Tooltip from '@mui/material/Tooltip';
 
-const EditBusinessData = (observer(() => {
+const EditBusinessData = observer(() => {
 
   useEffect(() => {
     async function getData() {
@@ -25,14 +24,19 @@ const EditBusinessData = (observer(() => {
     if (store.isLogin) {
       getData();
       setShowEdit(true);
+      setAble(true);
+    }
+    else{
+      setShowEdit(false);
+      setAble(false);
     }
   }, []);
 
   // const [opens, setOpens] = useState(false);
 
   const [showEdit, setShowEdit] = useState(false);
-
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = useState(false);
+  const [able, setAble] = useState(false);
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -47,9 +51,14 @@ const EditBusinessData = (observer(() => {
     setOpen(false);
   }
 
-  const save = (name, address, phone, owner, logo, description) => {
-    store.saveDetails(name, address, phone, owner, logo, description);
-    handleClose();
+  const save = () => {
+    console.log( name, address, phone, owner, logo, description);
+    store.saveDetails( name, address, phone, owner, logo, description)
+    // handleClose();
+  }
+
+  const closing = () => {
+    setOpen(false);
   }
 
   const [name, setName] = useState(store.tempBusinessData.name);
@@ -72,8 +81,7 @@ const EditBusinessData = (observer(() => {
       </header>
     </Box>
 
-    {/* {opens && */}
-      <div>
+      {able &&
         <React.Fragment>
           <Tooltip title="edit">
           <Button onClick={handleClickOpen}>
@@ -81,21 +89,19 @@ const EditBusinessData = (observer(() => {
           </Button>
           </Tooltip>
           <Dialog
-            open={open}
-            onClose={handleClose}
-            PaperProps={{
-              component: 'form',
-            }}
-            >
+          open={open}
+          onClose={handleClose}
+          PaperProps={{
+            component: 'form',
+          }}
+          >
             <DialogTitle>set business data</DialogTitle>
-            <DialogContent sx={{}}>
-            <Typography gutterBottom>
+            <DialogContent>
            business name <br /> <TextField id="outlined-basic" variant="outlined" value={name} onChange={(e) => setName(e.target.value)} /> <br />
            adress <br /> <TextField id="outlined-basic" variant="outlined" value={address} onChange={(e) => setAddress(e.target.value)} /> <br />
            phone <br /> <TextField id="outlined-basic" variant="outlined" value={phone} onChange={(e) => setPhone(e.target.value)} /> <br />
            name owner <br /> <TextField id="outlined-basic" variant="outlined" value={owner} onChange={(e) => setOwner(e.target.value)} /> <br />
            description <br /> <TextField id="outlined-basic" variant="outlined" value={description} onChange={(e) => setDescription(e.target.value)} />
-          </Typography>
             </DialogContent>
             <DialogActions>
               <Tooltip title="save">
@@ -103,12 +109,12 @@ const EditBusinessData = (observer(() => {
             save
           </Button>
           </Tooltip>
+          <Button variant="contained" disableElevation onClick={closing}>cancel</Button>
             </DialogActions>
           </Dialog>
         </React.Fragment>
-      </div >
-    {/* } */}
-  </div>
+        }
+      </div>
   </>)
-}))
+})
 export default EditBusinessData
